@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -19,10 +19,9 @@ const SearchComponent = (props) => {
   };
 
   return (
-    <div>
-      <input type="text" value={value} onChange={onSearchChange} />
-      <SearchBox type="text" />
-    </div>
+    <Fragment>
+      <SearchBox type="text" value={value} onChange={onSearchChange} />
+    </Fragment>
   );
 };
 

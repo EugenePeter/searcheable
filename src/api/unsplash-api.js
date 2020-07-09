@@ -1,7 +1,7 @@
 import Axios from "axios";
 
 const apiRoot = "https://api.unsplash.com";
-const accessKeys = "ANM58e8pfXCdO6sYR_JJoR1LKhCLyIJtqC2l1sNAvyE";
+const accessKeys = "fuABrUOZFBWIGRIlXAVTo_OZ_1SxPQHmwzWL3vd4138";
 
 export const fetchData = async () => {
   const ourRequest = Axios.CancelToken.source();

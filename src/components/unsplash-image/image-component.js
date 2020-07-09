@@ -47,7 +47,7 @@ const ImageComponent = (props) => {
             ? defaultImage.map((image) => (
                 <ImageList
                   url={image.urls.thumb}
-                  key={image.id + 1}
+                  key={image.id}
                   disc={image.alt_description}
                 />
               ))
