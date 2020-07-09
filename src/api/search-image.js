@@ -1,8 +1,7 @@
 import Axios from "axios";
 
 export const apiRoot = "https://api.unsplash.com";
-export const accessKeys =
-  "fuABrUOZFBWIGRIlXAVTo_OZ_1SxPQHmwzWL3vd4138";
+export const accessKeys = "fuABrUOZFBWIGRIlXAVTo_OZ_1SxPQHmwzWL3vd4138";
 
 export const SearchImage = async (query) => {
   const ourRequest = Axios.CancelToken.source();

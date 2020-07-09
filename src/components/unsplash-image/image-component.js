@@ -1,39 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, Fragment } from "react";
+import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import { fetchData } from "../../api/unsplash-api";
+import { fetchImageActionStart } from "../../redux/default-images/images.actions";
+
 import ImageList from "./image-list.component";
+import {
+  selectDefaultImage,
+  fetchImage,
+} from "../../redux/default-images/image.selector";
 
-const ImageComponent = () => {
-  const [images, setImages] = useState([]);
+import { Loader } from "../loader/loader";
+import { ImageWrapper } from "./image-list-component.styles";
+
+const ImageComponent = (props) => {
+  const { fetchDefaultImage, defaultImage, isFetching } = props;
 
   useEffect(() => {
-    async function recieveData() {
-      try {
-        const data = await fetchData();
+    fetchData();
+  }, [fetchDefaultImage]);
 
-        await setImages(...images, data);
-      } catch (error) {
-        console.log(error);
-      }
+  useEffect(() => {
+    if (!isFetching) {
+      // alert(isFetching);
+      console.dir(defaultImage);
     }
-    recieveData();
-  }, []);
+  }, [isFetching, defaultImage]);
 
-  //   console.log(images);
+  console.log(isFetching);
+
+  const fetchData = () => {
+    fetchDefaultImage();
+  };
 
   return (
-    <div>
-      {images
-        ? images.map((image) => (
-            <ImageList
-              url={image.urls.thumb}
-              key={image.id}
-              disc={image.alt_description}
-            />
-          ))
-        : ""}
-    </div>
+    <Fragment>
+      {isFetching > 0 && <Loader />}
+      <InfiniteScroll
+        dataLength={defaultImage.length} //This is important field to render the next data
+        next={fetchData}
+        hasMore={true}
+      >
+        <ImageWrapper>
+          {defaultImage
+            ? defaultImage.map((image) => (
+                <ImageList
+                  url={image.urls.thumb}
+                  key={image.id + 1}
+                  disc={image.alt_description}
+                />
+              ))
+            : ""}
+        </ImageWrapper>
+      </InfiniteScroll>
+    </Fragment>
   );
 };
 
-export default ImageComponent;
+const mapDispatchToProps = (dispatch) => ({
+  fetchDefaultImage: () => dispatch(fetchImageActionStart()),
+});
+
+// const mapStateToProps = createStructuredSelector({
+//   selectDefaultImage,
+// });
+
+const mapStateToProps = createStructuredSelector({
+  defaultImage: selectDefaultImage,
+  isFetching: fetchImage,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageComponent);

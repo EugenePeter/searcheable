@@ -3,6 +3,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
 import searchReducer from "./search/search.reducer";
+import defaultImageReducer from "./default-images/images.reducer";
 
 const persistConfig = {
   key: "root",
@@ -12,6 +13,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   search: searchReducer,
+  defaultImages: defaultImageReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);

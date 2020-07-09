@@ -1,13 +1,11 @@
 import React from "react";
 
+import { Image } from "./image-list-component.styles";
+
 const ImageList = (props) => {
   const { url, disc } = props;
   //   console.log(props);
-  return (
-    <div>
-      <img src={url} alt={disc} />
-    </div>
-  );
+  return <Image src={url} alt={disc} />;
 };
 
 export default ImageList;

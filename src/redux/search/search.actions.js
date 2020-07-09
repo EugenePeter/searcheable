@@ -7,6 +7,10 @@ export const SearchActionStart = (value) => ({
   value,
 });
 
+export const fetchImageActionStart = () => ({
+  type: SearchActionTypes.SEARCH_IS_FETCHING,
+});
+
 export const SearchActionSuccess = (items) => ({
   type: SearchActionTypes.SEARCH_SUCCESS,
   payload: items,

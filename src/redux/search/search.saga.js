@@ -1,19 +1,11 @@
-import {
-  put,
-  call,
-  takeLatest,
-  all,
-} from "redux-saga/effects";
+import { put, call, takeLatest, all, debounce } from "redux-saga/effects";
 
-import {
-  apiRoot,
-  accessKeys,
-} from "../../api/search-image";
+import { apiRoot, accessKeys } from "../../api/search-image";
 import Axios from "axios";
 
 import {
-  SearchActionStart,
   SearchActionSuccess,
+  fetchImageActionStart,
   SearchActionFailure,
 } from "./search.actions";
 
@@ -21,31 +13,35 @@ import SearchActionTypes from "./search.types";
 
 function* fetchFieldAsync({ value }) {
   const ourRequest = Axios.CancelToken.source();
+  const TrimmedValue = value.trim();
   try {
     const response = yield Axios.get(
-      `${apiRoot}/search/photos?page=2&query=${value}&client_id=${accessKeys}`,
+      `${apiRoot}/search/photos?page=1&query=${TrimmedValue}&client_id=${accessKeys}&count=20`,
       { cancelToken: ourRequest.token }
     );
-    const data = yield response.data;
+    const data = yield response.data.results;
     console.log(value);
     console.log(data);
     // return data;
-    // yield put(SearchActionSuccess(value));
+    yield put(fetchImageActionStart());
+
+    yield put(SearchActionSuccess(data));
   } catch (e) {
-    // yield put(SearchActionFailure(e));
+    yield put(SearchActionFailure(e));
     yield console.log(e);
   }
 }
 
+export function* debounceFetch() {
+  yield debounce(1000, SearchActionTypes.SEARCH_START, fetchFieldAsync);
+}
+
 export function* fetchFieldStart() {
-  yield takeLatest(
-    SearchActionTypes.SEARCH_START,
-    fetchFieldAsync
-  );
+  yield takeLatest(SearchActionTypes.SEARCH_START, debounceFetch);
 }
 
 export const searchFieldSaga = function* () {
-  yield all([call(fetchFieldStart)]);
+  yield all([call(debounceFetch)]);
 };
 
 // function* fetchFieldAsync({ value }) {
