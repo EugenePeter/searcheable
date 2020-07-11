@@ -20,13 +20,16 @@ const HeaderComponent = () => {
       <Header backgroundImage={backgroundImage}>
         <ContainerMid>
           <Title>
-            <h1>Searchspiration</h1>
+            <h1>visualizer</h1>
           </Title>
           <SubTitle>
             <h2>Your daily visual inspiration</h2>
             <h4>Powered by react, redux-saga and styled-components</h4>
           </SubTitle>
           <SearchComponent />
+          <small style={{ marginTop: "1rem" }}>
+            Designed and Developed by Eugene Peter Maestrado
+          </small>
         </ContainerMid>
       </Header>
     </Container>

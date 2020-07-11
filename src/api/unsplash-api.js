@@ -12,11 +12,12 @@ export const fetchData = async () => {
     );
     const data = response.data;
     return data;
-  } catch (e) {
-    console.log(e);
+  } catch (error) {
+    console.log(error);
+    return { error };
   }
 
-  return () => {
-    ourRequest.cancel();
-  };
+  // return () => {
+  //   ourRequest.cancel();
+  // };
 };

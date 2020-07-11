@@ -16,7 +16,7 @@ function* fetchFieldAsync({ value }) {
   const TrimmedValue = value.trim();
   try {
     const response = yield Axios.get(
-      `${apiRoot}/search/photos?page=1&query=${TrimmedValue}&client_id=${accessKeys}&count=20`,
+      `${apiRoot}/search/photos?page=1&query=${TrimmedValue}&client_id=${accessKeys}&count=60`,
       { cancelToken: ourRequest.token }
     );
     const data = yield response.data.results;

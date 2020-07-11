@@ -5,7 +5,8 @@ import { Image } from "./image-list-component.styles";
 const ImageList = (props) => {
   const { url, disc } = props;
   //   console.log(props);
-  return <Image src={url} alt={disc} />;
+  const urls = (url || {}).regular || {};
+  return <Image src={urls} alt={disc} />;
   // return <img />;
 };
 

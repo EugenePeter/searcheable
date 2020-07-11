@@ -32,11 +32,15 @@ export const Title = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: "Roboto Condensed", sans-serif;
+  box-sizing: border-box;
 
   h1 {
-    font-size: 3rem;
     margin: 0;
-    font-weight: 400;
+    font-size: 4rem;
+
+    font-weight: 800;
+    text-transform: uppercase;
   }
 
   @media screen and (min-width: 992px) {
@@ -49,16 +53,22 @@ export const SubTitle = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
 
+  h2 {
+    font-size: 2rem;
+  }
   h2,
   h3 {
     text-align: center;
     margin: 0;
     padding: 0;
+    font-weight: 300;
   }
 
   h4 {
     margin: 0.2rem;
+    text-align: center;
   }
 
   @media screen and (min-width: 992px) {

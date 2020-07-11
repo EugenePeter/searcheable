@@ -17,6 +17,6 @@ export const ContainerMid = styled.div`
   width: 90%;
 
   @media screen and (min-width: 992px) {
-    max-width: 70rem;
+    max-width: 60rem;
   }
 `;

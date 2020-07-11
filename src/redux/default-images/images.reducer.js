@@ -13,25 +13,28 @@ const defaultImageReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         defaultImage: state.defaultImage.concat(action.value),
-        isFetching: !state.isFetching,
+        isFetching: false,
       };
 
     case SearchActionTypes.SEARCH_IS_FETCHING:
       return {
         ...state,
         isFetching: true,
+        defaultImage: "",
       };
 
     case SearchActionTypes.SEARCH_SUCCESS:
       return {
         ...state,
+
         defaultImage: action.payload,
-        isFetching: !state.isFetching,
+        isFetching: false,
       };
     case ImageTypes.FETCH_IMAGE_FAILURE:
       return {
         ...state,
         error: action.value,
+        isFetching: true,
       };
     default:
       return state;

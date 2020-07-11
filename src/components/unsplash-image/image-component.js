@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { createStructuredSelector } from "reselect";
 import InfiniteScroll from "react-infinite-scroll-component";
 
@@ -11,7 +11,7 @@ import {
   fetchImage,
 } from "../../redux/default-images/image.selector";
 
-import { Loader } from "../loader/loader";
+import { Loader, LoaderCircle } from "../loader/loader";
 import { ImageWrapper } from "./image-list-component.styles";
 
 const ImageComponent = (props) => {
@@ -34,26 +34,33 @@ const ImageComponent = (props) => {
     fetchDefaultImage();
   };
 
+  const error = useSelector((state) => state.defaultImages.error);
+  const defaultImages = defaultImage || [];
+
   return (
     <Fragment>
       {isFetching > 0 && <Loader />}
-      <InfiniteScroll
-        dataLength={defaultImage.length} //This is important field to render the next data
-        next={fetchData}
-        hasMore={true}
-      >
-        <ImageWrapper>
-          {defaultImage
-            ? defaultImage.map((image) => (
-                <ImageList
-                  url={image.urls.small}
-                  key={image.id}
-                  disc={image.alt_description}
-                />
-              ))
-            : ""}
-        </ImageWrapper>
-      </InfiniteScroll>
+      {error ? (
+        <LoaderCircle />
+      ) : (
+        <InfiniteScroll
+          dataLength={defaultImages.length} //This is important field to render the next data
+          next={fetchData}
+          hasMore={true}
+        >
+          <ImageWrapper>
+            {!defaultImages && error
+              ? ""
+              : defaultImages.map((image) => (
+                  <ImageList
+                    key={image.id}
+                    disc={image.alt_description}
+                    url={image.urls}
+                  />
+                ))}
+          </ImageWrapper>
+        </InfiniteScroll>
+      )}
     </Fragment>
   );
 };

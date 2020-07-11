@@ -7,12 +7,16 @@ import { fetchImageActionSuccess, fetchImageActionFailure } from "./images.actio
 import ImageTypes from "./images.types";
 
 function* fetchDefaultImageAsync() {
-  try {
-    const defaultImage = yield call(fetchData);
+  const defaultImage = yield call(fetchData);
+  yield put(fetchImageActionSuccess(defaultImage));
+  // console.log(defaultImage);
+
+  if (!defaultImage.error) {
     yield put(fetchImageActionSuccess(defaultImage));
-    console.log(defaultImage);
-  } catch (e) {
-    yield put(fetchImageActionFailure(e));
+    yield console.log(defaultImage);
+  } else {
+    yield put(fetchImageActionFailure(defaultImage.error));
+    yield console.log(defaultImage.error);
   }
 }
 
